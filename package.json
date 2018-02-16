@@ -1,6 +1,6 @@
 {
   "name": "node-package",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Generated Nutmeg Web Component",
   "main": "dist/node-package.js",
   "module": "dist/node-package.js",
