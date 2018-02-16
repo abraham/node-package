@@ -1,0 +1,35 @@
+{
+  "name": "node-package",
+  "version": "0.1.0",
+  "description": "Generated Nutmeg Web Component",
+  "main": "dist/node-package.js",
+  "module": "dist/node-package.js",
+  "unpkg": "dist/node-package.min.js",
+  "types": "dist/node-package.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "node-package",
+    "nutmeg"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "npx nutmeg build .",
+    "prebuild": "npx nutmeg clean .",
+    "prepare": "npm run build -- --production",
+    "pretest": "npm run build",
+    "serve": "npx nutmeg serve .",
+    "test": "npx nutmeg test .",
+    "watch": "npx nutmeg watch ."
+  },
+  "dependencies": {
+    "@nutmeg/seed": "0.8.2"
+  },
+  "devDependencies": {
+    "@nutmeg/cli": "0.11.2"
+  }
+}
