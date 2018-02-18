@@ -1,0 +1,101 @@
+{
+  "name": "@nutmeg/cli",
+  "version": "0.11.2",
+  "description": "Build, test, and publish vanilla Web Components with a little spice",
+  "main": "dist/cli.js",
+  "types": "dist/cli.d.ts",
+  "bin": {
+    "nutmeg-build": "bin/nutmeg-build",
+    "nutmeg-clean": "bin/nutmeg-clean",
+    "nutmeg-new": "bin/nutmeg-new",
+    "nutmeg-serve": "bin/nutmeg-serve",
+    "nutmeg-test": "bin/nutmeg-test",
+    "nutmeg-watch": "bin/nutmeg-watch",
+    "nutmeg": "bin/nutmeg"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abraham/nutmeg-cli.git"
+  },
+  "keywords": [
+    "web-components",
+    "webcomponents",
+    "shadow-dom",
+    "shadowdom",
+    "lit-html",
+    "nutmeg",
+    "typescript"
+  ],
+  "author": {
+    "name": "Abraham Williams",
+    "email": "abraham@abrah.am",
+    "url": "https://abrah.am"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abraham/nutmeg-cli/issues"
+  },
+  "homepage": "https://github.com/abraham/nutmeg-cli",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "pretest": "mkdir tmp && npm pack . && node ./scripts/rename-pack.js",
+    "test": "cd tmp && nutmeg new ci-test first:number second:string third:boolean --no-yarn --cli-source file:../../nutmeg-cli-latest.tgz && cd ci-test && npm run test",
+    "test:yarn": "cd tmp && nutmeg new ci-test first:number second:string third:boolean --yarn --cli-source file:../.. && cd ci-test && npm run test",
+    "watch": "tsc --watch"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "@nutmeg/seed": "0.8.2",
+    "@types/chai": "4.1.2",
+    "@types/mocha": "2.2.48",
+    "@types/sinon": "4.1.3",
+    "@webcomponents/webcomponentsjs": "1.1.0",
+    "babel-preset-env": "1.6.1",
+    "chai": "4.1.2",
+    "commander": "2.13.0",
+    "hasbin": "1.2.3",
+    "html-webpack-plugin": "2.30.1",
+    "karma": "2.0.0",
+    "karma-chai": "0.1.0",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-firefox-launcher": "1.1.0",
+    "karma-mocha": "1.3.0",
+    "karma-opera-launcher": "1.0.0",
+    "karma-safari-launcher": "1.0.0",
+    "karma-sinon": "1.0.5",
+    "karma-typescript": "3.0.12",
+    "karma-typescript-es6-transform": "1.0.3",
+    "karma-webpack": "2.0.9",
+    "lodash.template": "4.4.0",
+    "mocha": "5.0.0",
+    "pascal-case": "2.0.1",
+    "recursive-copy": "2.0.8",
+    "shelljs": "0.8.1",
+    "sinon": "4.2.2",
+    "through2": "2.0.3",
+    "ts-loader": "3.4.0",
+    "typescript": "2.6.2",
+    "uglifyjs-webpack-plugin": "1.1.8",
+    "update-notifier": "2.3.0",
+    "webpack": "3.10.0",
+    "webpack-bundle-analyzer": "2.10.0",
+    "webpack-dev-server": "2.11.1"
+  },
+  "devDependencies": {
+    "@types/lodash.template": "4.4.3",
+    "@types/node": "9.4.0",
+    "@types/shelljs": "0.7.8",
+    "@types/through2": "2.0.33",
+    "@types/update-notifier": "2.0.0"
+  },
+  "browser": {
+    "fs": false,
+    "child_process": false
+  }
+}
