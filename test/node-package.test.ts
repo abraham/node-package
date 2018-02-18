@@ -4,7 +4,8 @@ import * as sinon from 'sinon';
 
 import { NodePackage } from '../src/node-package';
 
-const TIMEOUT = 0;
+// Increase timeout for AppVeyor
+const TIMEOUT = 500;
 
 describe('<node-package>', () => {
   let component: NodePackage;
@@ -13,7 +14,8 @@ describe('<node-package>', () => {
   before(() => {
     const realFetch = window.fetch;
     stub = sinon.stub(window, 'fetch').callsFake((url: string) => {
-      return realFetch(url.replace('https://unpkg.com/', './base/test/data/'));
+      const localUrl = url.replace('https://unpkg.com/', './base/test/data/').replace('/package.json', '.json')
+      return realFetch(localUrl);
     });
   });
 
