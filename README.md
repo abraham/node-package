@@ -35,7 +35,7 @@ Set the `name` attribute to the name of an [NPM](https://www.npmjs.com/) package
 <node-package name="lodash"></node-package>
 ```
 
-![Example](/images/default.png)
+![Example](https://github.com/abraham/node-package/raw/master/images/default.png)
 
 For advanced theming you can set the following:
 
@@ -54,7 +54,7 @@ For advanced theming you can set the following:
 <node-package name="bluebird" class="blue"></node-package>
 ```
 
-![Example with blue theme](/images/custom-theme-blue.png)
+![Example with blue theme](https://github.com/abraham/node-package/raw/master/images/custom-theme-blue.png)
 
 ```
 <style>
@@ -67,11 +67,11 @@ For advanced theming you can set the following:
 <node-package name="@nutmeg/cli" class="red"></node-package>
 ```
 
-![Example with red theme](/images/custom-theme-red.png)
+![Example with red theme](https://github.com/abraham/node-package/raw/master/images/custom-theme-red.png)
 
 Install commands being copied.
 
-![Example of copying install command](/images/copy-install.gif)
+![Example of copying install command](https://github.com/abraham/node-package/raw/master/images/copy-install.gif)
 
 License
 ----
