@@ -1,7 +1,7 @@
 {
   "name": "node-package",
   "version": "1.0.0",
-  "description": "Generated Nutmeg Web Component",
+  "description": "Node Package Web Component",
   "main": "dist/node-package.js",
   "module": "dist/node-package.js",
   "unpkg": "dist/node-package.min.js",
@@ -9,14 +9,24 @@
   "directories": {
     "test": "test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abraham/node-package.git"
+  },
   "engines": {
     "node": ">=8.0.0"
   },
   "keywords": [
     "node-package",
+    "npm",
+    "web-component",
     "nutmeg"
   ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abraham/node-package/issues"
+  },
+  "homepage": "https://github.com/abraham/node-package",
   "scripts": {
     "build": "npx nutmeg build .",
     "prebuild": "npx nutmeg clean .",

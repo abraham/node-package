@@ -1,5 +1,10 @@
 &lt;node-package&gt;
 ====
+[![Version Status](https://img.shields.io/npm/v/node-package.svg?style=flat&label=version&colorB=4bc524)](https://npmjs.com/package/node-package)
+[![macOS Build Status](https://img.shields.io/circleci/project/github/abraham/node-package.svg?style=flat&label=macos)](https://circleci.com/gh/abraham/node-package)
+[![Linux Build Status](https://img.shields.io/travis/abraham/node-package.svg?style=flat&label=linux)](https://travis-ci.org/abraham/node-package)
+[![Windows Build Status](https://img.shields.io/appveyor/ci/abraham/node-package.svg?style=flat&label=windows)](https://ci.appveyor.com/project/abraham/node-package)
+[![Dependency Status](https://david-dm.org/abraham/node-package.svg?style=flat)](https://david-dm.org/abraham/node-package)
 
 Install
 ----
@@ -16,18 +21,57 @@ Loading this component. It would be a good idea to use a specific version instea
 <script src="https://unpkg.com/node-package@latest/dist/node-package.min.js"></script>
 ```
 
+Example
+----
+
+[Live demo](https://codepen.io/abrahamwilliams/pen/eVVJrM)
+
 Usage
 ----
 
+Set the `name` attribute to the name of an (NPM)[https://www.npmjs.com/] package.
+
 ```
-<node-package></node-package>
-
-<node-package name="Pickle"></node-package>
-
-<node-package>Slot content</node-package>
+<node-package name="lodash"></node-package>
 ```
 
+![Example](/images/default.png)
 
+For advanced theming you can set the following:
+
+- `--node-package-background-color`
+- `--node-package-color`
+- `--node-package-link-color`
+
+```
+<style>
+  node-package.blue {
+    --node-package-background-color: #03A9F4;
+    --node-package-color: #FAFAFA;
+    --node-package-link-color: #EEEEEE;
+  }
+</style>
+<node-package name="bluebird" class="blue"></node-package>
+```
+
+![Example with blue theme](/images/custom-theme-blue.png)
+
+```
+<style>
+  node-package.red {
+    --node-package-background-color: #CB3837;
+    --node-package-color: #FAFAFA;
+    --node-package-link-color: #EEEEEE;
+  }
+</style>
+<node-package name="@nutmeg/cli" class="red"></node-package>
+```
+
+![Example with red theme](/images/custom-theme-red.png)
+
+Install commands being copied.
+
+![Example of copying install command](/images/copy-install.gif)
 
 License
 ----

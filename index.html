@@ -22,22 +22,25 @@
 
     node-package.blue {
       --node-package-background-color: #03A9F4;
+      --node-package-color: #FAFAFA;
+      --node-package-link-color: #EEEEEE;
+    }
+
+    node-package.red {
+      --node-package-background-color: #CB3837;
+      --node-package-color: #FAFAFA;
+      --node-package-link-color: #EEEEEE;
     }
   </style>
 </head>
 <body>
-  <node-package></node-package>
+  <!-- <node-package name="lodash"></node-package> -->
 
-  <node-package name="Pickle"></node-package>
+  <node-package name="bluebird" class="blue"></node-package>
 
-  <node-package>Slot content</node-package>
+  <!-- <node-package name="@nutmeg/cli" class="red"></node-package> -->
 
-  <node-package class="blue"></node-package>
-
-  <script>
-    /** Set complex properties */
-    // document.querySelector('node-package').foo = ['bar'];
-  </script>
+  <!-- <node-package name="chalk"></node-package> -->
 
   <!-- In development `node-package.bundled.js` will automatically be loaded. -->
 </body>
