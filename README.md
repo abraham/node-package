@@ -29,7 +29,7 @@ Example
 Usage
 ----
 
-Set the `name` attribute to the name of an (NPM)[https://www.npmjs.com/] package.
+Set the `name` attribute to the name of an [NPM](https://www.npmjs.com/) package.
 
 ```
 <node-package name="lodash"></node-package>
