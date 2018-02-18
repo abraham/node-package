@@ -4,7 +4,8 @@ import * as sinon from 'sinon';
 
 import { NodePackage } from '../src/node-package';
 
-const TIMEOUT = 0;
+// Increase timeout for AppVeyor
+const TIMEOUT = 500;
 
 describe('<node-package>', () => {
   let component: NodePackage;
