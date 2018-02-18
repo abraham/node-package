@@ -13,7 +13,8 @@ describe('<node-package>', () => {
   before(() => {
     const realFetch = window.fetch;
     stub = sinon.stub(window, 'fetch').callsFake((url: string) => {
-      return realFetch(url.replace('https://unpkg.com/', './base/test/data/'));
+      const localUrl = url.replace('https://unpkg.com/', './base/test/data/').replace('/package.json', '.json')
+      return realFetch(localUrl);
     });
   });
 
