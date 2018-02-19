@@ -113,7 +113,7 @@ describe('<node-package>', () => {
         assertCommand(1, 'git clone git://github.com/petkaantonov/bluebird.git');
         tabs[2].click();
         await sleep(TIMEOUT);
-        assertCommand(2, 'https://unpkg.com/bluebird/js/browser/bluebird.js');
+        assertCommand(2, '<script async src="https://unpkg.com/bluebird/js/browser/bluebird.js"></script>');
       });
 
       describe('without web or git', () => {
