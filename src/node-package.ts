@@ -242,7 +242,7 @@ export class NodePackage extends Seed {
 
   private installCommandTemplate(command: InstallCommand): TemplateResult {
     return html`
-      <input id="npm" class$="command fixed-width ellipsis item ${this.installCommand !== command.id ? 'hidden' : ''}" value$="${command.command}">
+      <input id="npm" class$="command fixed-width ellipsis item ${this.installCommand !== command.id ? 'hidden' : ''}" readonly value$="${command.command}">
     `
   }
 

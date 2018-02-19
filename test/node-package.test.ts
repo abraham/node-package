@@ -90,6 +90,10 @@ describe('<node-package>', () => {
         expect(component.$$('#install .command.hidden').length).to.eq(2);
       });
 
+      it('shows commands as readonly', () => {
+        expect(component.$$('#install .command[readonly]').length).to.eq(3);
+      });
+
       function assertCommand(index: number, command: string) {
         let commands = component.$$('#install .command') as NodeListOf<HTMLInputElement>;
         let tabs = component.$$('#tabs .tab') as NodeListOf<HTMLAnchorElement>;
