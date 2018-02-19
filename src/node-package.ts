@@ -42,7 +42,6 @@ export class NodePackage extends Seed {
         :host {
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
           border-radius: 2px;
-          overflow: hidden;
         }
 
         * {
@@ -68,6 +67,9 @@ export class NodePackage extends Seed {
           color: var(--node-package-color, #212121);
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
+          height: 340px;
+          overflow: hidden;
         }
 
         #header { }
@@ -80,6 +82,10 @@ export class NodePackage extends Seed {
         #logo {
           height: 38px;
           width: auto;
+        }
+
+        #description {
+          height: 2em;
         }
 
         #keywords {
@@ -95,11 +101,16 @@ export class NodePackage extends Seed {
         #footer {}
 
         #install {
-          background-color: var(--node-package-color, #E0E0E0);
-          color: var(--node-package-background-color, #212121);
+          padding: 0;
         }
 
-        #install svg {
+        #commands {
+          background-color: var(--node-package-color, #E0E0E0);
+          color: var(--node-package-background-color, #212121);
+          padding: 16px;
+        }
+
+        #commands svg {
           fill: var(--node-package-background-color, #212121);
         }
 
@@ -174,6 +185,9 @@ export class NodePackage extends Seed {
           transition: bottom 300ms ease-in-out;
         }
 
+        #loading, #error {
+          font-size: 24px;
+        }
       </style>
     `;
   }
@@ -234,13 +248,15 @@ export class NodePackage extends Seed {
 
   private get installTemplate(): TemplateResult {
     return html`
-      <div id="tabs" class="row">
-        ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installTabTemplate(command))}
-      </div>
-      <div id="install" class="row row-horizontal">
-        ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installCommandTemplate(command))}
-        <div class="item">
-          <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
+      <div id="install" class="row">
+        <div id="tabs" class="xrow">
+          ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installTabTemplate(command))}
+        </div>
+        <div id="commands" class="xrow row-horizontal">
+          ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installCommandTemplate(command))}
+          <div class="item">
+            <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
+          </div>
         </div>
       </div>
     `;
