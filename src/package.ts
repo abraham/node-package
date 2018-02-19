@@ -47,7 +47,7 @@ export class Package {
     }
     if (this.unpkg) {
       commands.push({
-        command: this.unpkg,
+        command: `<script async src="${this.unpkg}"></script>`,
         id: 'unpkg',
         selected: false,
       });
