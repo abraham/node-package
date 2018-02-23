@@ -72,7 +72,10 @@ export class NodePackage extends Seed {
           overflow: hidden;
         }
 
-        #header { }
+        #header h1 {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
         #header a {
           color: var(--node-package-color, #212121);
