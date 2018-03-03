@@ -341,10 +341,10 @@ export class NodePackage extends Seed {
   }
 
   private shouldFetchPackage(): boolean {
-    if (this.fetchPending) {
+    if (this.fetchPending || !this.name) {
       return false;
     } else {
-      return this.package.empty || (this.package.name !== this.name && this.name !== '');
+      return this.package.empty || this.package.name !== this.name;
     }
   }
 
