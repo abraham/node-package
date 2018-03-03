@@ -1,6 +1,6 @@
 {
   "name": "node-package",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Node Package Web Component",
   "main": "dist/node-package.js",
   "module": "dist/node-package.js",
