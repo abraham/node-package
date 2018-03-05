@@ -7,11 +7,7 @@ export interface InstallCommand {
 }
 
 export class Package {
-  constructor(private data?: any) {
-  }
-
-  public get empty(): boolean {
-    return !this.data;
+  constructor(private data: any) {
   }
 
   public get description(): string {
