@@ -3,7 +3,6 @@ export type InstallSource = 'npm' | 'git' | 'unpkg';
 export interface InstallCommand {
   command: string;
   id: InstallSource;
-  selected: boolean;
 }
 
 export class Package {
@@ -39,21 +38,18 @@ export class Package {
       {
         command: `npm install ${this.name} --save`,
         id: 'npm',
-        selected: true,
       }
     ];
     if (this.git) {
       commands.push({
         command: `git clone ${this.git}`,
         id: 'git',
-        selected: false,
       });
     }
     if (this.unpkg) {
       commands.push({
         command: `<script async src="${this.unpkg}"></script>`,
         id: 'unpkg',
-        selected: false,
       });
     }
     return commands;
