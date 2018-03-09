@@ -254,10 +254,10 @@ export class NodePackage extends Seed {
   private get installTemplate(): TemplateResult {
     return html`
       <div id="install" class="row">
-        <div id="tabs" class="xrow">
+        <div id="tabs">
           ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installTabTemplate(command))}
         </div>
-        <div id="commands" class="xrow row-horizontal">
+        <div id="commands" class="row-horizontal">
           ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installCommandTemplate(command))}
           <div class="item">
             <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
