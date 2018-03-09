@@ -309,7 +309,10 @@ export class NodePackage extends Seed {
     return html`
       <div id="content">
         ${this.headerTemplate}
-        ${until(this.fetchPackage().then(() => this.contentTemplate).catch((error: string) => this.errorTemplate(error)), this.loadingTemplate)}
+        ${until(this.fetchPackage()
+                  .then(() => this.contentTemplate)
+                  .catch((error: string) => this.errorTemplate(error)),
+                this.loadingTemplate)}
       </div>
     `;
   }
