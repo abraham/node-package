@@ -104,13 +104,13 @@ export interface PackageData {
   author?: string | PersonData;
   bin?: string | {[index: string]: string};
   bugs?: string | BugsData;
-  bundledDepedencies?: DependenciesData;
+  bundledDependencies?: DependenciesData;
   config?: ConfigData;
   contributors?: Array<string | PersonData>;
   cpu?: string[];
-  depedencies?: DependenciesData;
+  dependencies?: DependenciesData;
   description?: string;
-  devDepedencies?: DependenciesData;
+  devDependencies?: DependenciesData;
   directories?: DirectoriesData;
   engines?: EnginesData;
   files?: string[];
@@ -120,9 +120,9 @@ export interface PackageData {
   main?: string;
   man?: string | string[];
   name: string;
-  optionalDepedencies?: DependenciesData;
+  optionalDependencies?: DependenciesData;
   os?: string[];
-  peerDepedencies?: DependenciesData;
+  peerDependencies?: DependenciesData;
   private?: boolean;
   publishConfig?: ConfigData;
   repository?: string | RepositoryData;
