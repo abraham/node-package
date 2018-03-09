@@ -2,15 +2,16 @@ import { Seed, Property, html, svg, TemplateResult } from '@nutmeg/seed';
 import { until } from 'lit-html/lib/until';
 import { repeat } from 'lit-html/lib/repeat';
 
+import { Api } from './api';
 import { InstallCommand, InstallSource, Package } from './package';
 
 export class NodePackage extends Seed {
   @Property() public name: string = '';
 
   private readonly apiHost = 'https://unpkg.com/';
-  private package: Package = new Package();
+  private package!: Package;
   private installCommand: InstallSource = 'npm';
-  private fetchPending = false;
+  private api = new Api();
 
   constructor() {
     super();
@@ -334,29 +335,14 @@ export class NodePackage extends Seed {
 
   private async fetchPackage(): Promise<Package> {
     if (this.shouldFetchPackage()) {
-      await this.fetchData().then(data => this.package = new Package(data));
+      this.package = new Package(await this.api.fetch(this.name));
       this.render();
     }
     return this.package;
   }
 
   private shouldFetchPackage(): boolean {
-    if (this.fetchPending || !this.name) {
-      return false;
-    } else {
-      return this.package.empty || this.package.name !== this.name;
-    }
-  }
-
-  private async fetchData(): Promise<string | {}> {
-    this.fetchPending = true;
-    const response = await fetch(`${this.apiHost}${this.name}/package.json`);
-    this.fetchPending = false;
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      throw response.text();
-    }
+    return !!this.name && (!this.package || this.package.name !== this.name);
   }
 
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {

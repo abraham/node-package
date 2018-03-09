@@ -7,19 +7,19 @@ export interface InstallCommand {
 }
 
 export class Package {
-  constructor(private data?: any) {
-  }
-
-  public get empty(): boolean {
-    return !this.data;
+  constructor(private data: PackageData) {
   }
 
   public get description(): string {
-    return this.data.description;
+    return this.data.description || '';
   }
 
   public get git(): string {
-    return this.hasGit() ? this.data.repository.url : '';
+    if (typeof this.data.repository === 'object' && this.data.repository.type === 'git') {
+      return this.data.repository.url;
+    } else {
+      return '';
+    }
   }
 
   public get keywords(): string[] {
@@ -27,7 +27,11 @@ export class Package {
   }
 
   public get license(): string {
-    return this.data.license;
+    if (typeof this.data.license === 'string') {
+      return this.data.license;
+    } else {
+      return '';
+    }
   }
 
   public get installCommands(): InstallCommand[] {
@@ -60,7 +64,7 @@ export class Package {
   }
 
   public get types(): string {
-    return this.data.types;
+    return this.data.types ||  '';
   }
 
   public get version(): string {
@@ -69,10 +73,6 @@ export class Package {
 
   public get unpkg(): string {
     return this.webpath ? new URL(`${this.name}/${this.webpath}`, 'https://unpkg.com/').href : '';
-  }
-
-  private hasGit(): boolean {
-    return this.data.repository && this.data.repository.type === 'git';
   }
 
   private get dirtyKeywords(): string[] {
@@ -86,14 +86,96 @@ export class Package {
   }
 
   private get webpath(): string {
-    if (this.data.unpkg && typeof this.unpkg === 'string') {
+    if (!!this.data.unpkg) {
       return this.data.unpkg;
-    } else if (this.data.browser && typeof this.data.browser === 'string') {
+    } else if (!!this.data.browser) {
       return this.data.browser;
-    } else if (this.data.main && typeof this.data.main === 'string') {
+    } else if (!!this.data.main) {
       return this.data.main;
+    } else if (!!this.data.webpack) {
+      return this.data.webpack;
     } else {
       return '';
     }
   }
+}
+
+export interface PackageData {
+  author?: string | PersonData;
+  bin?: string | {[index: string]: string};
+  bugs?: string | BugsData;
+  bundledDepedencies?: DependenciesData;
+  config?: ConfigData;
+  contributors?: Array<string | PersonData>;
+  cpu?: string[];
+  depedencies?: DependenciesData;
+  description?: string;
+  devDepedencies?: DependenciesData;
+  directories?: DirectoriesData;
+  engines?: EnginesData;
+  files?: string[];
+  homepage?: string;
+  keywords?: string[] | string;
+  license?: string | DeprecatedLicenseData;
+  main?: string;
+  man?: string | string[];
+  name: string;
+  optionalDepedencies?: DependenciesData;
+  os?: string[];
+  peerDepedencies?: DependenciesData;
+  private?: boolean;
+  publishConfig?: ConfigData;
+  repository?: string | RepositoryData;
+  scripts?: {[index: string]: string};
+  version: string;
+
+  // Non-standard
+  browser?: string;
+  readmeFilename?: string;
+  types?: string;
+  unpkg?: string;
+  webpack?: string;
+}
+
+export interface BugsData {
+  url?: string;
+  email?: string;
+}
+
+export interface DeprecatedLicenseData {
+  type: string;
+  url: string;
+}
+
+export interface PersonData {
+  name: string;
+  email?: string;
+  url?: string;
+}
+
+export interface DirectoriesData {
+  lib?: string;
+  bin?: string;
+  man?: string;
+  doc?: string;
+  example?: string;
+  test?: string;
+}
+
+export interface RepositoryData {
+  type: string;
+  url: string;
+}
+
+export interface DependenciesData {
+  [index: string]: string
+}
+
+export interface EnginesData {
+  node: string;
+  npm?: string;
+}
+
+export interface ConfigData {
+  [index: string]: string;
 }
