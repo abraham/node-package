@@ -11,7 +11,7 @@ export class NodePackage extends Seed {
   private readonly apiHost = 'https://unpkg.com/';
   private package!: Package;
   private installCommand: InstallSource = 'npm';
-  private fetchPending = false;
+  private api = new Api();
 
   constructor() {
     super();
@@ -335,16 +335,14 @@ export class NodePackage extends Seed {
 
   private async fetchPackage(): Promise<Package> {
     if (this.shouldFetchPackage()) {
-      this.fetchPending = true;
-      await Api.fetch(this.name).then(data => this.package = new Package(data));
-      this.fetchPending = false;
+      this.package = new Package(await this.api.fetch(this.name));
       this.render();
     }
     return this.package;
   }
 
   private shouldFetchPackage(): boolean {
-    if (this.fetchPending || !this.name) {
+    if (!this.name) {
       return false;
     } else {
       return !this.package || this.package.name !== this.name;
