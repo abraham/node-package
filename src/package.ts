@@ -3,7 +3,6 @@ export type InstallSource = 'npm' | 'git' | 'unpkg';
 export interface InstallCommand {
   command: string;
   id: InstallSource;
-  selected: boolean;
 }
 
 export class Package {
@@ -39,21 +38,18 @@ export class Package {
       {
         command: `npm install ${this.name} --save`,
         id: 'npm',
-        selected: true,
       }
     ];
     if (this.git) {
       commands.push({
         command: `git clone ${this.git}`,
         id: 'git',
-        selected: false,
       });
     }
     if (this.unpkg) {
       commands.push({
         command: `<script async src="${this.unpkg}"></script>`,
         id: 'unpkg',
-        selected: false,
       });
     }
     return commands;
@@ -64,7 +60,7 @@ export class Package {
   }
 
   public get types(): string {
-    return this.data.types ||  '';
+    return this.data.types || this.data.typings ||  '';
   }
 
   public get version(): string {
@@ -104,13 +100,13 @@ export interface PackageData {
   author?: string | PersonData;
   bin?: string | {[index: string]: string};
   bugs?: string | BugsData;
-  bundledDepedencies?: DependenciesData;
+  bundledDependencies?: DependenciesData;
   config?: ConfigData;
   contributors?: Array<string | PersonData>;
   cpu?: string[];
-  depedencies?: DependenciesData;
+  dependencies?: DependenciesData;
   description?: string;
-  devDepedencies?: DependenciesData;
+  devDependencies?: DependenciesData;
   directories?: DirectoriesData;
   engines?: EnginesData;
   files?: string[];
@@ -120,9 +116,9 @@ export interface PackageData {
   main?: string;
   man?: string | string[];
   name: string;
-  optionalDepedencies?: DependenciesData;
+  optionalDependencies?: DependenciesData;
   os?: string[];
-  peerDepedencies?: DependenciesData;
+  peerDependencies?: DependenciesData;
   private?: boolean;
   publishConfig?: ConfigData;
   repository?: string | RepositoryData;
@@ -133,6 +129,7 @@ export interface PackageData {
   browser?: string;
   readmeFilename?: string;
   types?: string;
+  typings?: string;
   unpkg?: string;
   webpack?: string;
 }
