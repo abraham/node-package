@@ -64,7 +64,7 @@ export class Package {
   }
 
   public get types(): string {
-    return this.data.types ||  '';
+    return this.data.types || this.data.typings ||  '';
   }
 
   public get version(): string {
@@ -133,6 +133,7 @@ export interface PackageData {
   browser?: string;
   readmeFilename?: string;
   types?: string;
+  typings?: string;
   unpkg?: string;
   webpack?: string;
 }
