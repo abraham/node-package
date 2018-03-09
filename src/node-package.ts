@@ -342,11 +342,7 @@ export class NodePackage extends Seed {
   }
 
   private shouldFetchPackage(): boolean {
-    if (!this.name) {
-      return false;
-    } else {
-      return !this.package || this.package.name !== this.name;
-    }
+    return !!this.name && (!this.package || this.package.name !== this.name);
   }
 
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
