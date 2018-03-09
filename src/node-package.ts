@@ -44,6 +44,7 @@ export class NodePackage extends Seed {
         :host {
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
           border-radius: 2px;
+          width: 100%;
         }
 
         * {
@@ -254,10 +255,10 @@ export class NodePackage extends Seed {
   private get installTemplate(): TemplateResult {
     return html`
       <div id="install" class="row">
-        <div id="tabs" class="xrow">
+        <div id="tabs">
           ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installTabTemplate(command))}
         </div>
-        <div id="commands" class="xrow row-horizontal">
+        <div id="commands" class="row-horizontal">
           ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installCommandTemplate(command))}
           <div class="item">
             <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
@@ -308,7 +309,10 @@ export class NodePackage extends Seed {
     return html`
       <div id="content">
         ${this.headerTemplate}
-        ${until(this.fetchPackage().then(() => this.contentTemplate).catch((error: string) => this.errorTemplate(error)), this.loadingTemplate)}
+        ${until(this.fetchPackage()
+                  .then(() => this.contentTemplate)
+                  .catch((error: string) => this.errorTemplate(error)),
+                this.loadingTemplate)}
       </div>
     `;
   }
