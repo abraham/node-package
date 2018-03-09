@@ -1,3 +1,5 @@
+import { PackageData } from './package';
+
 enum Status {
   Initialized,
   Pending,
@@ -8,9 +10,9 @@ enum Status {
 export class Api {
   private readonly apiHost = 'https://unpkg.com/';
   private status = Status.Initialized;
-  private current!: Promise<{}>;
+  private current!: Promise<PackageData>;
 
-  public fetch(name: string): Promise<{}> {
+  public fetch(name: string): Promise<PackageData> {
     if (this.status !== Status.Pending) {
       this.current = this.actualFetch(name);
     }
@@ -18,7 +20,7 @@ export class Api {
     return this.current;
   }
 
-  public async actualFetch(name: string): Promise<{}> {
+  public async actualFetch(name: string): Promise<PackageData> {
     this.status = Status.Pending
     const response = await fetch(this.url(name));
 
