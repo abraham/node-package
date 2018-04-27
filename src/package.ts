@@ -36,7 +36,7 @@ export class Package {
   public get installCommands(): InstallCommand[] {
     const commands: InstallCommand[] = [
       {
-        command: `npm install ${this.name} --save`,
+        command: `npm install ${this.name}`,
         id: 'npm',
       }
     ];
