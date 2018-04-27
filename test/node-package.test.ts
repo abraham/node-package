@@ -111,7 +111,7 @@ describe('<node-package>', () => {
 
       it('changes command to match tab', async () => {
         let tabs = component.$$('#tabs .tab') as NodeListOf<HTMLAnchorElement>;
-        assertCommand(0, 'npm install bluebird --save');
+        assertCommand(0, 'npm install bluebird');
         tabs[1].click();
         await sleep(TIMEOUT);
         assertCommand(1, 'git clone git://github.com/petkaantonov/bluebird.git');
@@ -140,10 +140,21 @@ describe('<node-package>', () => {
           component.$('#copy').click();
           expect(copy.called).to.be.true;
           expect(input.selectionStart).to.eq(0);
-          expect(input.selectionEnd).to.eq(27);
+          expect(input.selectionEnd).to.eq(20);
           expect(component.$('#toast').classList.contains('copied')).to.be.true;
           await sleep(1000);
           expect(component.$('#toast').classList.contains('copied')).to.be.false;
+        });
+      });
+
+      describe('with global', () => {
+        beforeEach(async () => {
+          component = fixture('<node-package name="@angular/cli" global></node-package>');
+          await sleep(TIMEOUT);
+        });
+
+        it('renders --global', () => {
+          assertCommand(0, 'npm install @angular/cli --global');
         });
       });
     });
