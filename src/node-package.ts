@@ -7,6 +7,7 @@ import { InstallCommand, InstallSource, Package } from './package';
 
 export class NodePackage extends Seed {
   @Property() public name: string = '';
+  @Property() public global: boolean = false;
 
   private readonly apiHost = 'https://unpkg.com/';
   private package!: Package;
@@ -256,10 +257,10 @@ export class NodePackage extends Seed {
     return html`
       <div id="install" class="row">
         <div id="tabs">
-          ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installTabTemplate(command))}
+          ${repeat(this.package.installCommands(this.global), command => command.id, (command, _index) => this.installTabTemplate(command))}
         </div>
         <div id="commands" class="row-horizontal">
-          ${repeat(this.package.installCommands, command => command.id, (command, _index) => this.installCommandTemplate(command))}
+          ${repeat(this.package.installCommands(this.global), command => command.id, (command, _index) => this.installCommandTemplate(command))}
           <div class="item">
             <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
           </div>

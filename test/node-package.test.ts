@@ -146,6 +146,17 @@ describe('<node-package>', () => {
           expect(component.$('#toast').classList.contains('copied')).to.be.false;
         });
       });
+
+      describe('with global', () => {
+        beforeEach(async () => {
+          component = fixture('<node-package name="@angular/cli" global></node-package>');
+          await sleep(TIMEOUT);
+        });
+
+        it('renders --global', () => {
+          assertCommand(0, 'npm install @angular/cli --global');
+        });
+      });
     });
 
     describe('footer', () => {

@@ -37,6 +37,14 @@ Set the `name` attribute to the name of an [NPM](https://www.npmjs.com/) package
 
 ![Example](https://github.com/abraham/node-package/raw/master/images/default.png)
 
+Add the `global` attribute to add `--global` to the NPM install command.
+
+```
+<node-package name="@angular/cli" global></node-package>
+```
+
+Will result in `npm install @angular/cli --global`.
+
 For advanced theming you can set the following:
 
 - `--node-package-background-color`

@@ -33,10 +33,10 @@ export class Package {
     }
   }
 
-  public get installCommands(): InstallCommand[] {
+  public installCommands(global: boolean): InstallCommand[] {
     const commands: InstallCommand[] = [
       {
-        command: `npm install ${this.name}`,
+        command: `npm install ${this.name}${global ? ' --global' : ''}`,
         id: 'npm',
       }
     ];
