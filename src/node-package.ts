@@ -42,10 +42,17 @@ export class NodePackage extends Seed {
   public get styles(): TemplateResult {
     return html`
       <style>
-        :host {
-          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-          border-radius: 2px;
+        node-package{
           width: 100%;
+        }
+
+        :host {
+          width: 100%;
+        }
+
+        #content {
+          border: 1px solid var(--node-package-color, #212121);
+          border-radius: 8px;
         }
 
         * {
@@ -181,7 +188,7 @@ export class NodePackage extends Seed {
           position: relative;
           bottom: -24px;
           padding: 8px 16px;
-          border-radius: 20px;
+          border-radius: 2px;
           color: var(--node-package-background-color, #FFF);
           background-color: var(--node-package-color, #212121);
           transition: bottom 300ms ease-in-out;
@@ -292,7 +299,7 @@ export class NodePackage extends Seed {
       ${this.installTemplate}
       ${this.footerTemplate}
       <div id="toast-wrapper">
-        <span id="toast">Copied</span>
+        <span id="toast">Copied to clipboard</span>
       </div>
     `;
   }
