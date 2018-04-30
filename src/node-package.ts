@@ -188,14 +188,14 @@ export class NodePackage extends Seed {
           position: relative;
           bottom: -24px;
           padding: 8px 16px;
-          border-radius: 2px;
+          border-radius: 24px;
           color: var(--node-package-background-color, #FFF);
           background-color: var(--node-package-color, #212121);
           transition: bottom 300ms ease-in-out;
         }
 
         #toast.copied {
-          bottom: 34px;
+          bottom: 36px;
           transition: bottom 300ms ease-in-out;
         }
 
