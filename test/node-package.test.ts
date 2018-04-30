@@ -142,9 +142,9 @@ describe('<node-package>', () => {
           expect(input.selectionStart).to.eq(0);
           expect(input.selectionEnd).to.eq(20);
           expect(component.$('#toast').classList.contains('copied')).to.be.true;
-          await sleep(1000);
+          await sleep(2750);
           expect(component.$('#toast').classList.contains('copied')).to.be.false;
-        });
+        }).timeout(5000);
       });
 
       describe('with global', () => {

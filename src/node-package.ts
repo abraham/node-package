@@ -370,7 +370,7 @@ export class NodePackage extends Seed {
     this.$('#toast').classList.add('copied');
     setTimeout(() => {
       this.$('#toast').classList.remove('copied');
-    }, 1000);
+    }, 2750);
   }
 
   private clearSelectedTabs(): void {
