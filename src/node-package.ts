@@ -42,10 +42,6 @@ export class NodePackage extends Seed {
   public get styles(): TemplateResult {
     return html`
       <style>
-        node-package{
-          width: 100%;
-        }
-
         :host {
           width: 100%;
         }
