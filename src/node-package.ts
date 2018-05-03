@@ -120,6 +120,11 @@ export class NodePackage extends Seed {
           padding: 16px;
         }
 
+        #commands input::selection {
+          color: var(--node-package-color, #E0E0E0);
+          background-color: var(--node-package-background-color, #212121);
+        }
+
         #commands svg {
           fill: var(--node-package-background-color, #212121);
         }
