@@ -189,13 +189,13 @@ describe('<node-package>', () => {
         });
 
         it('is pretty', () => {
-          expect(getComputedStyle(component.$('#content')).backgroundColor).equal('rgb(250, 250, 250)');
+          expect(getComputedStyle(component.$('#content')).backgroundColor).equal('rgb(255, 255, 255)');
           expect(getComputedStyle(component.$('#header')).color).equal('rgb(33, 33, 33)');
           expect(getComputedStyle(component.$('#description')).color).equal('rgb(33, 33, 33)');
           expect(getComputedStyle(component.$('#keywords .keyword')).color).equal('rgb(203, 56, 55)');
-          expect(getComputedStyle(component.$('#tabs .tab')).backgroundColor).equal('rgb(250, 250, 250)');
+          expect(getComputedStyle(component.$('#tabs .tab')).backgroundColor).equal('rgb(255, 255, 255)');
           expect(getComputedStyle(component.$('#tabs .tab')).color).equal('rgb(203, 56, 55)');
-          expect(getComputedStyle(component.$('#install .command')).backgroundColor).equal('rgb(224, 224, 224)');
+          expect(getComputedStyle(component.$('#install .command')).backgroundColor).equal('rgb(238, 238, 238)');
           expect(getComputedStyle(component.$('#install .command')).color).equal('rgb(33, 33, 33)');
           expect(getComputedStyle(component.$('#footer')).color).equal('rgb(33, 33, 33)');
         });
@@ -208,7 +208,7 @@ describe('<node-package>', () => {
               <style>
                 node-package.blue {
                   --node-package-background-color: #03A9F4;
-                  --node-package-color: #FAFAFA;
+                  --node-package-color: #FFFFFF;
                   --node-package-link-color: #EEEEEE;
                 }
               </style>
@@ -220,14 +220,14 @@ describe('<node-package>', () => {
 
         it('is pretty', () => {
           expect(getComputedStyle(component.$('#content')).backgroundColor).equal('rgb(3, 169, 244)');
-          expect(getComputedStyle(component.$('#header')).color).equal('rgb(250, 250, 250)');
-          expect(getComputedStyle(component.$('#description')).color).equal('rgb(250, 250, 250)');
+          expect(getComputedStyle(component.$('#header')).color).equal('rgb(255, 255, 255)');
+          expect(getComputedStyle(component.$('#description')).color).equal('rgb(255, 255, 255)');
           expect(getComputedStyle(component.$('#keywords .keyword')).color).equal('rgb(238, 238, 238)');
           expect(getComputedStyle(component.$('#tabs .tab')).backgroundColor).equal('rgb(3, 169, 244)');
           expect(getComputedStyle(component.$('#tabs .tab')).color).equal('rgb(238, 238, 238)');
-          expect(getComputedStyle(component.$('#install .command')).backgroundColor).equal('rgb(250, 250, 250)');
+          expect(getComputedStyle(component.$('#install .command')).backgroundColor).equal('rgb(255, 255, 255)');
           expect(getComputedStyle(component.$('#install .command')).color).equal('rgb(3, 169, 244)');
-          expect(getComputedStyle(component.$('#footer')).color).equal('rgb(250, 250, 250)');
+          expect(getComputedStyle(component.$('#footer')).color).equal('rgb(255, 255, 255)');
         });
       });
     });
