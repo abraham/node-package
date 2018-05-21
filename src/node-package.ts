@@ -67,7 +67,7 @@ export class NodePackage extends Seed {
         #content {
           border: 1px solid var(--node-package-color, #212121);
           border-radius: 8px;
-          background-color: var(--node-package-background-color, #FAFAFA);
+          background-color: var(--node-package-background-color, #FFFFFF);
           color: var(--node-package-color, #212121);
           display: flex;
           flex-direction: column;
@@ -112,13 +112,13 @@ export class NodePackage extends Seed {
         }
 
         #commands {
-          background-color: var(--node-package-color, #E0E0E0);
+          background-color: var(--node-package-color, #EEEEEE);
           color: var(--node-package-background-color, #212121);
           padding: 16px;
         }
 
         #commands input::selection {
-          color: var(--node-package-color, #E0E0E0);
+          color: var(--node-package-color, #EEEEEE);
           background-color: var(--node-package-background-color, #212121);
         }
 
@@ -129,7 +129,7 @@ export class NodePackage extends Seed {
         .command {
           border: none;
           color: var(--node-package-background-color, #212121);
-          background-color: var(--node-package-color, #E0E0E0);
+          background-color: var(--node-package-color, #EEEEEE);
           width: 100%;
           height: 24px;
           font-size: 16px;
@@ -144,12 +144,12 @@ export class NodePackage extends Seed {
         }
 
         .tab {
-          background-color: var(--node-package-background-color, #FAFAFA);
+          background-color: var(--node-package-background-color, #FFFFFF);
           padding: 12px 24px 8px 24px;
           color: var(--node-package-link-color, #CB3837);
           text-decoration: none;
           text-transform: uppercase;
-          border-bottom: var(--node-package-color, #E0E0E0) solid 0;
+          border-bottom: var(--node-package-color, #EEEEEE) solid 0;
           transition: border 100ms ease-in-out;
         }
 
@@ -187,7 +187,7 @@ export class NodePackage extends Seed {
           bottom: -24px;
           padding: 8px 16px;
           border-radius: 24px;
-          color: var(--node-package-background-color, #FFF);
+          color: var(--node-package-background-color, #FFFFFF);
           background-color: var(--node-package-color, #212121);
           transition: bottom 300ms ease-in-out;
         }
