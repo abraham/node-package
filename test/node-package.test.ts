@@ -33,7 +33,7 @@ describe('<node-package>', () => {
       it('renders the package name', () => {
         const links = component.$$('#header a') as NodeListOf<HTMLAnchorElement>;
         const name = links[0];
-        expect(name.innerHTML).to.eq('bluebird');
+        expect(name.innerText).to.eq('bluebird');
         expect(name.href).to.eq('https://npmjs.com/package/bluebird');
       });
 
