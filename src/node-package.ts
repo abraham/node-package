@@ -92,7 +92,7 @@ export class NodePackage extends Seed {
         }
 
         #description {
-          height: 3em;
+          max-height: 3em;
         }
 
         #keywords {
