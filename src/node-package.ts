@@ -46,11 +46,6 @@ export class NodePackage extends Seed {
           width: 100%;
         }
 
-        #content {
-          border: 1px solid var(--node-package-color, #212121);
-          border-radius: 8px;
-        }
-
         * {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         }
@@ -70,6 +65,8 @@ export class NodePackage extends Seed {
         }
 
         #content {
+          border: 1px solid var(--node-package-color, #212121);
+          border-radius: 8px;
           background-color: var(--node-package-background-color, #FAFAFA);
           color: var(--node-package-color, #212121);
           display: flex;
