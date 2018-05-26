@@ -154,6 +154,10 @@ export class NodePackage extends Seed {
           transition: border 100ms ease-in-out;
         }
 
+        .tab label {
+          cursor: pointer;
+        }
+
         .tab.selected, .tab:hover {
           border-bottom-width: 3px;
           transition: border 100ms ease-in-out;
@@ -249,14 +253,18 @@ export class NodePackage extends Seed {
   private installTabTemplate(command: InstallCommand): TemplateResult {
     const classes = `item tab ${this.installCommand === command.id ? 'selected' : ''}`;
     return html`
-      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>${command.id}</a>
-    `
+      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>
+        <label for$="${command.id}">
+          ${command.id}
+        </label>
+      </a>
+    `;
   }
 
   private installCommandTemplate(command: InstallCommand): TemplateResult {
     return html`
       <input id="${command.id}" class$="command fixed-width ellipsis item ${this.installCommand !== command.id ? 'hidden' : ''}" readonly value$="${command.command}">
-    `
+    `;
   }
 
   private get installTemplate(): TemplateResult {
