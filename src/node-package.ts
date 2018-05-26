@@ -65,7 +65,7 @@ export class NodePackage extends Seed {
         }
 
         #content {
-          border: 1px solid var(--node-package-color, #212121);
+          border: 1px solid var(--node-package-background-color, #EEEEEE);
           border-radius: 8px;
           background-color: var(--node-package-background-color, #FFFFFF);
           color: var(--node-package-color, #212121);
