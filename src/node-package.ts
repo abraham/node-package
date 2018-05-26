@@ -44,6 +44,9 @@ export class NodePackage extends Seed {
       <style>
         :host {
           width: 100%;
+          border: 1px solid var(--node-package-background-color, #dadce0);
+          border-radius: 8px;
+          overflow: hidden;
         }
 
         * {
@@ -65,8 +68,6 @@ export class NodePackage extends Seed {
         }
 
         #content {
-          border: 1px solid var(--node-package-background-color, #dadce0);
-          border-radius: 8px;
           background-color: var(--node-package-background-color, #fff);
           color: var(--node-package-color, #202124);
           display: flex;
