@@ -37,10 +37,10 @@
     "watch": "npx nutmeg watch ."
   },
   "dependencies": {
-    "@nutmeg/seed": "0.11.0",
-    "lit-html": "0.10.0"
+    "@nutmeg/seed": "0.12.1",
+    "lit-html": "0.10.2"
   },
   "devDependencies": {
-    "@nutmeg/cli": "0.14.0"
+    "@nutmeg/cli": "0.15.0"
   }
 }
