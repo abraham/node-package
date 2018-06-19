@@ -45,11 +45,16 @@ Add the `global` attribute to add `--global` to the NPM install command.
 
 Will result in `npm install @angular/cli --global`.
 
-For advanced theming you can set the following:
+Theming
+----
+
+For advanced theming you can set the following CSS custom properties:
 
 - `--node-package-background-color`
 - `--node-package-color`
 - `--node-package-link-color`
+
+Blue theme
 
 ```
 <style>
@@ -64,6 +69,8 @@ For advanced theming you can set the following:
 
 ![Example with blue theme](https://github.com/abraham/node-package/raw/master/images/custom-theme-blue.png)
 
+Red theme
+
 ```
 <style>
   node-package.red {
@@ -77,7 +84,24 @@ For advanced theming you can set the following:
 
 ![Example with red theme](https://github.com/abraham/node-package/raw/master/images/custom-theme-red.png)
 
-Install commands being copied.
+Card border
+
+You can also apply custom edge designs to look more like a card.
+
+```
+<style>
+  node-package.card {
+    box-shadow: 0 3px 4px 1px rgba(0, 0, 0, .08), 0 1px 1px 1px rgba(0, 0, 0, .05);
+    border-radius: 2px;
+    border-width: 0;
+  }
+</style>
+<node-package name="@nutmeg/cli" class="card"></node-package>
+```
+
+![Example with card border](https://github.com/abraham/node-package/raw/master/images/card.png)
+
+Demo of install commands being copied.
 
 ![Example of copying install command](https://github.com/abraham/node-package/raw/master/images/copy-install.gif)
 
