@@ -41,6 +41,6 @@
     "lit-html": "0.10.0"
   },
   "devDependencies": {
-    "@nutmeg/cli": "0.14.0"
+    "@nutmeg/cli": "0.15.0"
   }
 }
