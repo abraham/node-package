@@ -96,7 +96,7 @@ You can also apply custom edge designs to look more like a card.
     border-width: 0;
   }
 </style>
-<node-package name="@nutmeg/cli" class="card"></node-package>
+<node-package name="lite-server" class="card"></node-package>
 ```
 
 ![Example with card border](https://github.com/abraham/node-package/raw/master/images/card.png)
