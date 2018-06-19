@@ -56,7 +56,7 @@ For advanced theming you can set the following:
   node-package.blue {
     --node-package-background-color: #03A9F4;
     --node-package-color: #FAFAFA;
-    --node-package-link-color: #EEEEEE;
+    --node-package-link-color: #dadce0;
   }
 </style>
 <node-package name="bluebird" class="blue"></node-package>
@@ -69,7 +69,7 @@ For advanced theming you can set the following:
   node-package.red {
     --node-package-background-color: #CB3837;
     --node-package-color: #FAFAFA;
-    --node-package-link-color: #EEEEEE;
+    --node-package-link-color: #dadce0;
   }
 </style>
 <node-package name="@nutmeg/cli" class="red"></node-package>

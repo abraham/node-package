@@ -43,9 +43,10 @@ export class NodePackage extends Seed {
     return html`
       <style>
         :host {
-          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-          border-radius: 2px;
           width: 100%;
+          border: 1px solid var(--node-package-background-color, #dadce0);
+          border-radius: 8px;
+          overflow: hidden;
         }
 
         * {
@@ -67,8 +68,8 @@ export class NodePackage extends Seed {
         }
 
         #content {
-          background-color: var(--node-package-background-color, #FAFAFA);
-          color: var(--node-package-color, #212121);
+          background-color: var(--node-package-background-color, #fff);
+          color: var(--node-package-color, #202124);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -82,7 +83,7 @@ export class NodePackage extends Seed {
         }
 
         #header a {
-          color: var(--node-package-color, #212121);
+          color: var(--node-package-color, #202124);
           text-decoration: none;
         }
 
@@ -92,7 +93,7 @@ export class NodePackage extends Seed {
         }
 
         #description {
-          height: 2em;
+          max-height: 3em;
         }
 
         #keywords {
@@ -112,19 +113,24 @@ export class NodePackage extends Seed {
         }
 
         #commands {
-          background-color: var(--node-package-color, #E0E0E0);
-          color: var(--node-package-background-color, #212121);
+          background-color: var(--node-package-color, #dadce0);
+          color: var(--node-package-background-color, #202124);
           padding: 16px;
         }
 
+        #commands input::selection {
+          color: var(--node-package-color, #dadce0);
+          background-color: var(--node-package-background-color, #202124);
+        }
+
         #commands svg {
-          fill: var(--node-package-background-color, #212121);
+          fill: var(--node-package-background-color, #202124);
         }
 
         .command {
           border: none;
-          color: var(--node-package-background-color, #212121);
-          background-color: var(--node-package-color, #E0E0E0);
+          color: var(--node-package-background-color, #202124);
+          background-color: var(--node-package-color, #dadce0);
           width: 100%;
           height: 24px;
           font-size: 16px;
@@ -139,13 +145,17 @@ export class NodePackage extends Seed {
         }
 
         .tab {
-          background-color: var(--node-package-background-color, #FAFAFA);
+          background-color: var(--node-package-background-color, #fff);
           padding: 12px 24px 8px 24px;
           color: var(--node-package-link-color, #CB3837);
           text-decoration: none;
           text-transform: uppercase;
-          border-bottom: var(--node-package-color, #E0E0E0) solid 0;
+          border-bottom: var(--node-package-color, #dadce0) solid 0;
           transition: border 100ms ease-in-out;
+        }
+
+        .tab label {
+          cursor: pointer;
         }
 
         .tab.selected, .tab:hover {
@@ -181,14 +191,14 @@ export class NodePackage extends Seed {
           position: relative;
           bottom: -24px;
           padding: 8px 16px;
-          border-radius: 20px;
-          color: var(--node-package-background-color, #FFF);
-          background-color: var(--node-package-color, #212121);
+          border-radius: 24px;
+          color: var(--node-package-background-color, #fff);
+          background-color: var(--node-package-color, #202124);
           transition: bottom 300ms ease-in-out;
         }
 
         #toast.copied {
-          bottom: 34px;
+          bottom: 36px;
           transition: bottom 300ms ease-in-out;
         }
 
@@ -243,14 +253,18 @@ export class NodePackage extends Seed {
   private installTabTemplate(command: InstallCommand): TemplateResult {
     const classes = `item tab ${this.installCommand === command.id ? 'selected' : ''}`;
     return html`
-      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>${command.id}</a>
-    `
+      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>
+        <label for$="${command.id}">
+          ${command.id}
+        </label>
+      </a>
+    `;
   }
 
   private installCommandTemplate(command: InstallCommand): TemplateResult {
     return html`
       <input id="${command.id}" class$="command fixed-width ellipsis item ${this.installCommand !== command.id ? 'hidden' : ''}" readonly value$="${command.command}">
-    `
+    `;
   }
 
   private get installTemplate(): TemplateResult {
@@ -292,7 +306,7 @@ export class NodePackage extends Seed {
       ${this.installTemplate}
       ${this.footerTemplate}
       <div id="toast-wrapper">
-        <span id="toast">Copied</span>
+        <span id="toast">Copied to clipboard</span>
       </div>
     `;
   }
@@ -322,9 +336,9 @@ export class NodePackage extends Seed {
     return svg`
       <svg id="logo" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="540px" height="210px" viewBox="0 0 18 7">
         <path fill="#CB3837" d="M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"/>
-        <polygon fill="#FFFFFF" points="1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1 "/>
-        <path fill="#FFFFFF" d="M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"/>
-        <polygon fill="#FFFFFF" points="11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1 "/>
+        <polygon fill="#fff" points="1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1 "/>
+        <path fill="#fff" d="M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"/>
+        <polygon fill="#fff" points="11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1 "/>
       </svg>
     `;
   }
@@ -363,7 +377,7 @@ export class NodePackage extends Seed {
     this.$('#toast').classList.add('copied');
     setTimeout(() => {
       this.$('#toast').classList.remove('copied');
-    }, 1000);
+    }, 2750);
   }
 
   private clearSelectedTabs(): void {
