@@ -24,7 +24,7 @@ Loading this component. It would be a good idea to use a specific version instea
 Example
 ----
 
-[Live demo](https://codepen.io/abrahamwilliams/pen/eVVJrM)
+[Live demo](https://codepen.io/abraham/pen/eVVJrM)
 
 Usage
 ----
