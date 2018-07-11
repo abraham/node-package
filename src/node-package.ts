@@ -9,7 +9,6 @@ export class NodePackage extends Seed {
   @Property() public name: string = '';
   @Property() public global: boolean = false;
 
-  private readonly apiHost = 'https://unpkg.com/';
   private package!: Package;
   private installCommand: InstallSource = 'npm';
   private api = new Api();
@@ -378,10 +377,6 @@ export class NodePackage extends Seed {
     setTimeout(() => {
       this.$('#toast').classList.remove('copied');
     }, 2750);
-  }
-
-  private clearSelectedTabs(): void {
-    Array.prototype.forEach.call(this.$$('.tab.selected'), (tab: HTMLElement) => tab.classList.remove('selected'));
   }
 }
 
