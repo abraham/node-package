@@ -1,7 +1,6 @@
-import { Seed, Property, html, svg, TemplateResult } from '@nutmeg/seed';
-import { until } from 'lit-html/lib/until';
+import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
 import { repeat } from 'lit-html/lib/repeat';
-
+import { until } from 'lit-html/lib/until';
 import { Api } from './api';
 import { InstallCommand, InstallSource, Package } from './package';
 
