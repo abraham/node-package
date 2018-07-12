@@ -1,6 +1,6 @@
 import { html, Property, Seed, TemplateResult } from '@nutmeg/seed';
-import { until } from 'lit-html/lib/until';
 import { Api } from './api';
+import { Failure, Initiated, Pending, RemoteData, Success } from './data';
 import { Pkg } from './pkg';
 import { SuccessView } from './success.view';
 
@@ -8,8 +8,7 @@ export class NodePackage extends Seed {
   @Property() public name?: string;
   @Property() public global: boolean = false;
 
-  private pkg?: Pkg;
-  private view?: SuccessView;
+  private data: RemoteData = new Initiated();
   private api = new Api();
 
   constructor() {
@@ -207,7 +206,7 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private get headerTemplate(): TemplateResult {
+  private get header(): TemplateResult {
     return html`
       <div id="header" class="row row-horizontal">
         <h1 class="item">
@@ -220,7 +219,7 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private get loadingTemplate(): TemplateResult {
+  private get loading(): TemplateResult {
     return html`
       <div id="loading" class="row">
         Loading...
@@ -228,7 +227,7 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private errorTemplate(error: string): TemplateResult {
+  private error(error: string): TemplateResult {
     return html`
       <div id="error" class="row">
         ${error || 'Error getting pacakge details.'}
@@ -238,37 +237,42 @@ export class NodePackage extends Seed {
 
   /** HTML Template for the component. */
   public get template(): TemplateResult {
-    if (this.pkg) {
-      if (!this.view) {
-        this.view = new SuccessView(this, this.pkg);
+    let content = this.loading;
+    if (this.data instanceof Initiated) {
+      if (this.name) {
+        this.fetchPackage();
       }
-      return html`
-        <div id="content">
-          ${this.headerTemplate}
-          ${this.view.content}
-        </div>
-      `;
-    } else {
-      return html`
-        <div id="content">
-          ${this.headerTemplate}
-          ${until(this.fetchPackage()
-                    .then(() => this.render())
-                    .catch((error: string) => this.errorTemplate(error)),
-                  this.loadingTemplate)}
-        </div>
-      `;
+    } else if (this.data instanceof Pending) {
+    } else if (this.data instanceof Success) {
+      if (this.updateData) { this.fetchPackage(); }
+      content = this.data.view.content;
+    } else if (this.data instanceof Failure) {
+      if (this.updateData) { this.fetchPackage(); }
+      content = this.error(this.data.error);
     }
+    return html`
+      <div id="content">
+        ${this.header}
+        ${content}
+      </div>
+    `;
   }
 
   private async fetchPackage(): Promise<void> {
-    if (this.name && this.shouldFetchPackage()) {
-      this.pkg = new Pkg(await this.api.fetch(this.name));
+    if (this.name) {
+      this.data = new Pending(this.name);
+      try {
+        const pkg = new Pkg(await this.api.fetch(this.name));
+        this.data = new Success(this.name, pkg, this);
+      } catch (error) {
+        this.data = new Failure(this.name, error);
+      }
+      this.render();
     }
   }
 
-  private shouldFetchPackage(): boolean {
-    return !!this.name && (!this.pkg || this.pkg.name !== this.name);
+  private get updateData(): boolean {
+    return !(this.data instanceof Initiated) && this.data.name !== this.name;
   }
 }
 
