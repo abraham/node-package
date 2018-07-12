@@ -47,7 +47,7 @@
 <body>
   <node-package name="lodash"></node-package>
 
-  <node-package name="bluebird" class="blue"></node-package>
+  <node-package id="dynamic" class="blue"></node-package>
 
   <node-package name="@nutmeg/cli" class="red"></node-package>
 
@@ -56,6 +56,10 @@
   <node-package name="chalk"></node-package>
 
   <node-package name="nullnullnull"></node-package>
+
+  <script>
+    document.querySelector('#dynamic').name = 'bluebird';
+  </script>
 
   <!-- In development `node-package.bundled.js` will automatically be loaded. -->
 </body>

@@ -6,7 +6,7 @@ import { Api } from './api';
 import { InstallCommand, InstallSource, Package } from './package';
 
 export class NodePackage extends Seed {
-  @Property() public name: string = '';
+  @Property() public name?: string;
   @Property() public global: boolean = false;
 
   private package!: Package;
@@ -352,7 +352,7 @@ export class NodePackage extends Seed {
   }
 
   private async fetchPackage(): Promise<Package> {
-    if (this.shouldFetchPackage()) {
+    if (this.name && this.shouldFetchPackage()) {
       this.package = new Package(await this.api.fetch(this.name));
       this.render();
     }
