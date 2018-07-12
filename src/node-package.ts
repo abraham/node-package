@@ -2,13 +2,13 @@ import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
 import { repeat } from 'lit-html/lib/repeat';
 import { until } from 'lit-html/lib/until';
 import { Api } from './api';
-import { InstallCommand, InstallSource, Package } from './package';
+import { InstallCommand, InstallSource, Pkg } from './pkg';
 
 export class NodePackage extends Seed {
   @Property() public name?: string;
   @Property() public global: boolean = false;
 
-  private package!: Package;
+  private pkg!: Pkg;
   private installCommand: InstallSource = 'npm';
   private api = new Api();
 
@@ -237,14 +237,14 @@ export class NodePackage extends Seed {
   private get keywordsTemplate(): TemplateResult {
     return html`
       <div id="keywords" class="row ellipsis">
-        ${repeat(this.package.keywords, keyword => keyword, (keyword, _index) => this.keywordTemplate(keyword))}
+        ${repeat(this.pkg.keywords, keyword => keyword, (keyword, _index) => this.keywordTemplate(keyword))}
       </div>
     `;
   }
 
   private get typesTemplate(): TemplateResult {
     return html`
-      <span class="item" title="${this.package.types}">Includes types</span>
+      <span class="item" title="${this.pkg.types}">Includes types</span>
     `;
   }
 
@@ -269,10 +269,10 @@ export class NodePackage extends Seed {
     return html`
       <div id="install" class="row">
         <div id="tabs">
-          ${repeat(this.package.installCommands(this.global), command => command.id, (command, _index) => this.installTabTemplate(command))}
+          ${repeat(this.pkg.installCommands(this.global), command => command.id, (command, _index) => this.installTabTemplate(command))}
         </div>
         <div id="commands" class="row-horizontal">
-          ${repeat(this.package.installCommands(this.global), command => command.id, (command, _index) => this.installCommandTemplate(command))}
+          ${repeat(this.pkg.installCommands(this.global), command => command.id, (command, _index) => this.installCommandTemplate(command))}
           <div class="item">
             <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
           </div>
@@ -285,11 +285,11 @@ export class NodePackage extends Seed {
     return html`
       <div id="footer" class="row row-horizontal">
         <span class="item">
-          v${this.package.version}
+          v${this.pkg.version}
         </span>
-        ${this.package.types && this.typesTemplate}
+        ${this.pkg.types && this.typesTemplate}
         <span class="item">
-          ${this.package.license}
+          ${this.pkg.license}
         </span>
       </div>
     `;
@@ -298,7 +298,7 @@ export class NodePackage extends Seed {
   private get contentTemplate(): TemplateResult {
     return html`
       <div id="description" class="row">
-        ${this.package.description}
+        ${this.pkg.description}
       </div>
       ${this.keywordsTemplate}
       ${this.installTemplate}
@@ -350,16 +350,16 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private async fetchPackage(): Promise<Package> {
+  private async fetchPackage(): Promise<Pkg> {
     if (this.name && this.shouldFetchPackage()) {
-      this.package = new Package(await this.api.fetch(this.name));
+      this.pkg = new Pkg(await this.api.fetch(this.name));
       this.render();
     }
-    return this.package;
+    return this.pkg;
   }
 
   private shouldFetchPackage(): boolean {
-    return !!this.name && (!this.package || this.package.name !== this.name);
+    return !!this.name && (!this.pkg || this.pkg.name !== this.name);
   }
 
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
