@@ -1,4 +1,4 @@
-import { PackageData } from './package';
+import { PackageData } from './pkg';
 
 enum Status {
   Initialized,
