@@ -5,7 +5,7 @@ export interface InstallCommand {
   id: InstallSource;
 }
 
-export class Package {
+export class Pkg {
   constructor(private data: PackageData) {
   }
 
