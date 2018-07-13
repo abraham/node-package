@@ -1,7 +1,7 @@
 import { html, Property, Seed, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
 import { Pkg } from './pkg';
-import { Failure, Initialized, Pending, RemoteData, Success } from './remotedata';
+import { Failure, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { SuccessView } from './success.view';
 
 export class NodePackage extends Seed {
