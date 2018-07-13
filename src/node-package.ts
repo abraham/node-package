@@ -1,15 +1,15 @@
 import { html, Property, Seed, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
-import { Failure, Initiated, Pending, RemoteData, Success } from './data';
 import { Pkg } from './pkg';
+import { Failure, Initialized, Pending, RemoteData, Success } from './remotedata';
 import { SuccessView } from './success.view';
 
 export class NodePackage extends Seed {
-  @Property() public name?: string;
   @Property() public global: boolean = false;
+  @Property() public name?: string;
 
-  private data: RemoteData = new Initiated();
   private api = new Api();
+  private state: RemoteData<SuccessView, string> = new Initialized();
 
   constructor() {
     super();
@@ -238,17 +238,17 @@ export class NodePackage extends Seed {
   /** HTML Template for the component. */
   public get template(): TemplateResult {
     let content = this.loading;
-    if (this.data instanceof Initiated) {
+    if (this.state instanceof Initialized) {
       if (this.name) {
         this.fetchPackage();
       }
-    } else if (this.data instanceof Pending) {
-    } else if (this.data instanceof Success) {
+    } else if (this.state instanceof Pending) {
+    } else if (this.state instanceof Success) {
       if (this.updateData) { this.fetchPackage(); }
-      content = this.data.view.content;
-    } else if (this.data instanceof Failure) {
+      content = this.state.data.content;
+    } else if (this.state instanceof Failure) {
       if (this.updateData) { this.fetchPackage(); }
-      content = this.error(this.data.error);
+      content = this.error(this.state.error);
     }
     return html`
       <div id="content">
@@ -260,19 +260,19 @@ export class NodePackage extends Seed {
 
   private async fetchPackage(): Promise<void> {
     if (this.name) {
-      this.data = new Pending(this.name);
+      this.state = new Pending();
       try {
         const pkg = new Pkg(await this.api.fetch(this.name));
-        this.data = new Success(this.name, pkg, this);
+        this.state = new Success(new SuccessView(this, pkg));
       } catch (error) {
-        this.data = new Failure(this.name, error);
+        this.state = new Failure(error);
       }
       this.render();
     }
   }
 
   private get updateData(): boolean {
-    return !(this.data instanceof Initiated) && this.data.name !== this.name;
+    return this.state instanceof Success && this.state.data.name !== this.name;
   }
 }
 

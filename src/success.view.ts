@@ -8,6 +8,10 @@ export class SuccessView {
 
   constructor(private component: NodePackage, private pkg: Pkg) {}
 
+  public get name(): string {
+    return this.pkg.name;
+  }
+
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
     event.preventDefault();
     this.selectedInstallCommand = command.id;
