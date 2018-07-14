@@ -255,7 +255,7 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private get handler(): (state: State) => TemplateResult {
+  private get view(): (state: State) => TemplateResult {
     return fold<TemplateResult, SuccessView, string>(
       () => {
         if (this.name) {
@@ -282,7 +282,7 @@ export class NodePackage extends Seed {
     return html`
       <div id="content">
         ${this.header}
-        ${this.handler(this.state)}
+        ${this.view(this.state)}
       </div>
     `;
   }
