@@ -49,10 +49,6 @@ export class NodePackage extends Seed {
           overflow: hidden;
         }
 
-        * {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        }
-
         .fixed-width {
           font-family: Consolas, Courier, Courier New, Lucida Console, Monaco;
         }
@@ -68,6 +64,7 @@ export class NodePackage extends Seed {
         }
 
         #content {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
           background-color: var(--node-package-background-color, #fff);
           color: var(--node-package-color, #202124);
           display: flex;
