@@ -3,6 +3,7 @@ import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
 import { Pkg } from './pkg';
 import { SuccessView } from './success.view';
+import { FailureView } from './failure.view';
 
 type State = RemoteData<SuccessView, string>;
 
@@ -251,19 +252,15 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private error(error: string): TemplateResult {
-    return html`
-      <div id="error" class="row">
-        ${error || 'Error getting pacakge details.'}
-      </div>
-    `;
-  }
-
   private get handler(): (state: State) => TemplateResult {
     return fold<TemplateResult, SuccessView, string>(
       () => {
-        if (this.name) { this.fetchPackage(); }
-        return this.loading
+        if (this.name) {
+          this.fetchPackage();
+          return this.loading
+        } else {
+          return new FailureView('Missing required value "name"').content;
+        }
       },
       () => this.loading,
       (view: SuccessView) => {
@@ -272,7 +269,7 @@ export class NodePackage extends Seed {
       },
       (error: string) => {
         if (this.updateData) { this.fetchPackage(); }
-        return this.error(error)
+        return new FailureView(error).content;
       },
     );
   }
