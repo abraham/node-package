@@ -1,16 +1,19 @@
+import { Failure, fold, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
-import { repeat } from 'lit-html/lib/repeat';
-import { until } from 'lit-html/lib/until';
 import { Api } from './api';
-import { InstallCommand, InstallSource, Pkg } from './pkg';
+import { Pkg } from './pkg';
+import { SuccessView } from './success.view';
+import { FailureView } from './failure.view';
+import { PendingView } from './pending.view';
+
+type State = RemoteData<SuccessView, string>;
 
 export class NodePackage extends Seed {
-  @Property() public name?: string;
   @Property() public global: boolean = false;
+  @Property() public name?: string;
 
-  private pkg!: Pkg;
-  private installCommand: InstallSource = 'npm';
   private api = new Api();
+  private state: State = new Initialized();
 
   constructor() {
     super();
@@ -40,15 +43,12 @@ export class NodePackage extends Seed {
   public get styles(): TemplateResult {
     return html`
       <style>
+        /** Global */
         :host {
           width: 100%;
           border: 1px solid var(--node-package-background-color, #dadce0);
           border-radius: 8px;
           overflow: hidden;
-        }
-
-        * {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         }
 
         .fixed-width {
@@ -66,6 +66,7 @@ export class NodePackage extends Seed {
         }
 
         #content {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
           background-color: var(--node-package-background-color, #fff);
           color: var(--node-package-color, #202124);
           display: flex;
@@ -90,6 +91,7 @@ export class NodePackage extends Seed {
           width: auto;
         }
 
+        /** Success */
         #description {
           max-height: 3em;
         }
@@ -103,8 +105,6 @@ export class NodePackage extends Seed {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
-
-        #footer {}
 
         #install {
           padding: 0;
@@ -200,137 +200,20 @@ export class NodePackage extends Seed {
           transition: bottom 300ms ease-in-out;
         }
 
-        #loading, #error {
+        /** Pending */
+        #pending {
+          font-size: 24px;
+        }
+
+        /** Failure */
+        #error {
           font-size: 24px;
         }
       </style>
     `;
   }
 
-  private get loadingTemplate(): TemplateResult {
-    return html`
-      <div id="loading" class="row">
-        Loading...
-      </div>
-    `;
-  }
-
-  private get headerTemplate(): TemplateResult {
-    return html`
-      <div id="header" class="row row-horizontal">
-        <h1 class="item">
-          <a href="https://npmjs.com/package/${this.name}" target="_blank" rel="noopener" title="Open ${this.name} on NPM">${this.name}</a>
-        </h1>
-        <span class="item">
-          <a href="https://npmjs.com/package/${this.name}" target="_blank" rel="noopener" title="Open ${this.name} on NPM">${this.logo}</a>
-        </span>
-      </div>
-    `;
-  }
-
-  private keywordTemplate(keyword: string): TemplateResult {
-    return html`
-        <a href="https://www.npmjs.com/browse/keyword/${keyword}" target="_blank" rel="noopener" class="keyword">#${keyword}</a>
-    `;
-  }
-
-  private get keywordsTemplate(): TemplateResult {
-    return html`
-      <div id="keywords" class="row ellipsis">
-        ${repeat(this.pkg.keywords, keyword => keyword, (keyword, _index) => this.keywordTemplate(keyword))}
-      </div>
-    `;
-  }
-
-  private get typesTemplate(): TemplateResult {
-    return html`
-      <span class="item" title="${this.pkg.types}">Includes types</span>
-    `;
-  }
-
-  private installTabTemplate(command: InstallCommand): TemplateResult {
-    const classes = `item tab ${this.installCommand === command.id ? 'selected' : ''}`;
-    return html`
-      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>
-        <label for$="${command.id}">
-          ${command.id}
-        </label>
-      </a>
-    `;
-  }
-
-  private installCommandTemplate(command: InstallCommand): TemplateResult {
-    return html`
-      <input id="${command.id}" class$="command fixed-width ellipsis item ${this.installCommand !== command.id ? 'hidden' : ''}" readonly value$="${command.command}">
-    `;
-  }
-
-  private get installTemplate(): TemplateResult {
-    return html`
-      <div id="install" class="row">
-        <div id="tabs">
-          ${repeat(this.pkg.installCommands(this.global), command => command.id, (command, _index) => this.installTabTemplate(command))}
-        </div>
-        <div id="commands" class="row-horizontal">
-          ${repeat(this.pkg.installCommands(this.global), command => command.id, (command, _index) => this.installCommandTemplate(command))}
-          <div class="item">
-            <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  private get footerTemplate(): TemplateResult {
-    return html`
-      <div id="footer" class="row row-horizontal">
-        <span class="item">
-          v${this.pkg.version}
-        </span>
-        ${this.pkg.types && this.typesTemplate}
-        <span class="item">
-          ${this.pkg.license}
-        </span>
-      </div>
-    `;
-  }
-
-  private get contentTemplate(): TemplateResult {
-    return html`
-      <div id="description" class="row">
-        ${this.pkg.description}
-      </div>
-      ${this.keywordsTemplate}
-      ${this.installTemplate}
-      ${this.footerTemplate}
-      <div id="toast-wrapper">
-        <span id="toast">Copied to clipboard</span>
-      </div>
-    `;
-  }
-
-  private errorTemplate(error: string): TemplateResult {
-    return html`
-      <div id="error" class="row">
-        ${error || 'Error getting pacakge details.'}
-      </div>
-    `;
-  }
-
-  /** HTML Template for the component. */
-  public get template(): TemplateResult {
-    return html`
-      <div id="content">
-        ${this.headerTemplate}
-        ${until(this.fetchPackage()
-                  .then(() => this.contentTemplate)
-                  .catch((error: string) => this.errorTemplate(error)),
-                this.loadingTemplate)}
-      </div>
-    `;
-  }
-
-  private get logo(): TemplateResult {
+  public get logo(): TemplateResult {
     return svg`
       <svg id="logo" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="540px" height="210px" viewBox="0 0 18 7">
         <path fill="#CB3837" d="M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"/>
@@ -341,41 +224,81 @@ export class NodePackage extends Seed {
     `;
   }
 
-  private get copy(): TemplateResult {
-    return svg`
-      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-      </svg>
+  private get header(): TemplateResult {
+    if (this.name) {
+      return html`
+        <div id="header" class="row row-horizontal">
+          <h1 class="item">
+            <a href="https://npmjs.com/package/${this.name}" target="_blank" rel="noopener" title="Open ${this.name} on NPM">${this.name}</a>
+          </h1>
+          <span class="item">
+            <a href="https://npmjs.com/package/${this.name}" target="_blank" rel="noopener" title="Open ${this.name} on NPM">${this.logo}</a>
+          </span>
+        </div>
+      `;
+    } else {
+      return html`
+        <div id="header" class="row row-horizontal">
+          <span class="item"></span>
+          <span class="item">
+            ${this.logo}
+          </span>
+        </div>
+      `;
+    }
+  }
+
+  private get pending(): TemplateResult {
+    return new PendingView().content;
+  }
+
+  private get view(): (state: State) => TemplateResult {
+    return fold<TemplateResult, SuccessView, string>(
+      () => {
+        if (this.name) {
+          this.fetchPackage();
+          return this.pending
+        } else {
+          return new FailureView('Missing required value "name"').content;
+        }
+      },
+      () => this.pending,
+      (view: SuccessView) => {
+        if (this.updateData) { this.fetchPackage(); }
+        return view.content;
+      },
+      (error: string) => {
+        if (this.updateData) { this.fetchPackage(); }
+        return new FailureView(error).content;
+      },
+    );
+  }
+
+  /** HTML Template for the component. */
+  public get template(): TemplateResult {
+    return html`
+      <div id="content">
+        ${this.header}
+        ${this.view(this.state)}
+      </div>
     `;
   }
 
-  private async fetchPackage(): Promise<Pkg> {
-    if (this.name && this.shouldFetchPackage()) {
-      this.pkg = new Pkg(await this.api.fetch(this.name));
+  private async fetchPackage(): Promise<void> {
+    if (this.name) {
+      this.state = new Pending();
+      try {
+        const pkg = new Pkg(await this.api.fetch(this.name));
+        this.state = new Success(new SuccessView(this, pkg));
+      } catch (error) {
+        this.state = new Failure(error);
+      }
       this.render();
     }
-    return this.pkg;
   }
 
-  private shouldFetchPackage(): boolean {
-    return !!this.name && (!this.pkg || this.pkg.name !== this.name);
-  }
-
-  private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
-    event.preventDefault();
-    this.installCommand = command.id;
-    this.render();
-  }
-
-  private copyInstallCommand(event: MouseEvent): void {
-    event.preventDefault();
-    (this.$('.command:not(.hidden)') as HTMLInputElement).select();
-    document.execCommand('copy');
-    this.$('#toast').classList.add('copied');
-    setTimeout(() => {
-      this.$('#toast').classList.remove('copied');
-    }, 2750);
+  private get updateData(): boolean {
+    return this.state instanceof Success && this.state.data.name !== this.name;
   }
 }
 
