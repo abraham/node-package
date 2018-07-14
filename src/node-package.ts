@@ -1,15 +1,17 @@
+import { Failure, fold, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { html, Property, Seed, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
 import { Pkg } from './pkg';
-import { Failure, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { SuccessView } from './success.view';
+
+type State = RemoteData<SuccessView, string>;
 
 export class NodePackage extends Seed {
   @Property() public global: boolean = false;
   @Property() public name?: string;
 
   private api = new Api();
-  private state: RemoteData<SuccessView, string> = new Initialized();
+  private state: State = new Initialized();
 
   constructor() {
     super();
@@ -235,25 +237,30 @@ export class NodePackage extends Seed {
     `;
   }
 
+  private get handler(): (state: State) => TemplateResult {
+    return fold<TemplateResult, SuccessView, string>(
+      () => {
+        if (this.name) { this.fetchPackage(); }
+        return this.loading
+      },
+      () => this.loading,
+      (view: SuccessView) => {
+        if (this.updateData) { this.fetchPackage(); }
+        return view.content;
+      },
+      (error: string) => {
+        if (this.updateData) { this.fetchPackage(); }
+        return this.error(error)
+      },
+    );
+  }
+
   /** HTML Template for the component. */
   public get template(): TemplateResult {
-    let content = this.loading;
-    if (this.state instanceof Initialized) {
-      if (this.name) {
-        this.fetchPackage();
-      }
-    } else if (this.state instanceof Pending) {
-    } else if (this.state instanceof Success) {
-      if (this.updateData) { this.fetchPackage(); }
-      content = this.state.data.content;
-    } else if (this.state instanceof Failure) {
-      if (this.updateData) { this.fetchPackage(); }
-      content = this.error(this.state.error);
-    }
     return html`
       <div id="content">
         ${this.header}
-        ${content}
+        ${this.handler(this.state)}
       </div>
     `;
   }
