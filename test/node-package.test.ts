@@ -250,6 +250,16 @@ describe('<node-package>', () => {
       expect(component.$('#error').innerText).to.eq('Cannot find package 404@0.0.0');
     });
   });
+
+  describe('missing value', () => {
+    beforeEach(async () => {
+      component = fixture('<node-package></node-package>');
+    });
+
+    it('renders error message', () => {
+      expect(component.$('#error').innerText).to.eq('Missing required value "name"');
+    });
+  });
 });
 
 function fixture(tag: string): NodePackage {
