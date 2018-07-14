@@ -42,6 +42,7 @@ export class NodePackage extends Seed {
   public get styles(): TemplateResult {
     return html`
       <style>
+        /** Global */
         :host {
           width: 100%;
           border: 1px solid var(--node-package-background-color, #dadce0);
@@ -89,6 +90,7 @@ export class NodePackage extends Seed {
           width: auto;
         }
 
+        /** Success */
         #description {
           max-height: 3em;
         }
@@ -102,8 +104,6 @@ export class NodePackage extends Seed {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
-
-        #footer {}
 
         #install {
           padding: 0;
@@ -199,7 +199,13 @@ export class NodePackage extends Seed {
           transition: bottom 300ms ease-in-out;
         }
 
-        #loading, #error {
+        /** Pending */
+        #error {
+          font-size: 24px;
+        }
+
+        /** Failure */
+        #error {
           font-size: 24px;
         }
       </style>
