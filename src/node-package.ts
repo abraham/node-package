@@ -4,6 +4,7 @@ import { Api } from './api';
 import { Pkg } from './pkg';
 import { SuccessView } from './success.view';
 import { FailureView } from './failure.view';
+import { PendingView } from './pending.view';
 
 type State = RemoteData<SuccessView, string>;
 
@@ -200,7 +201,7 @@ export class NodePackage extends Seed {
         }
 
         /** Pending */
-        #error {
+        #pending {
           font-size: 24px;
         }
 
@@ -247,12 +248,8 @@ export class NodePackage extends Seed {
     }
   }
 
-  private get loading(): TemplateResult {
-    return html`
-      <div id="loading" class="row">
-        Loading...
-      </div>
-    `;
+  private get pending(): TemplateResult {
+    return new PendingView().content;
   }
 
   private get view(): (state: State) => TemplateResult {
@@ -260,12 +257,12 @@ export class NodePackage extends Seed {
       () => {
         if (this.name) {
           this.fetchPackage();
-          return this.loading
+          return this.pending
         } else {
           return new FailureView('Missing required value "name"').content;
         }
       },
-      () => this.loading,
+      () => this.pending,
       (view: SuccessView) => {
         if (this.updateData) { this.fetchPackage(); }
         return view.content;
