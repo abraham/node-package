@@ -12,6 +12,20 @@ export class SuccessView {
     return this.pkg.name;
   }
 
+  public get content(): TemplateResult {
+    return html`
+      <div id="description" class="row">
+        ${this.pkg.description}
+      </div>
+      ${this.keywords}
+      ${this.install}
+      ${this.footer}
+      <div id="toast-wrapper">
+        <span id="toast">Copied to clipboard</span>
+      </div>
+    `;
+  }
+
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
     event.preventDefault();
     this.selectedInstallCommand = command.id;
@@ -91,20 +105,6 @@ export class SuccessView {
         <span class="item">
           ${this.pkg.license}
         </span>
-      </div>
-    `;
-  }
-
-  public get content(): TemplateResult {
-    return html`
-      <div id="description" class="row">
-        ${this.pkg.description}
-      </div>
-      ${this.keywords}
-      ${this.install}
-      ${this.footer}
-      <div id="toast-wrapper">
-        <span id="toast">Copied to clipboard</span>
       </div>
     `;
   }
