@@ -1,12 +1,17 @@
 import { Failure, fold, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
-import { Pkg } from './pkg';
+import { Pkg, InstallSource, DEFAULT_INSTALL_SOURCE } from './pkg';
 import { SuccessView } from './success.view';
 import { FailureView } from './failure.view';
 import { PendingView } from './pending.view';
 
-type State = RemoteData<SuccessView, string>;
+interface SuccessData {
+  pkg: Pkg,
+  selectedTab: InstallSource,
+}
+
+type State = RemoteData<string, SuccessData>;
 
 export class NodePackage extends Seed {
   @Property() public global: boolean = false;
@@ -248,32 +253,6 @@ export class NodePackage extends Seed {
     }
   }
 
-  private get pending(): TemplateResult {
-    return new PendingView().content;
-  }
-
-  private get view(): (state: State) => TemplateResult {
-    return fold<TemplateResult, SuccessView, string>(
-      () => {
-        if (this.name) {
-          this.fetchPackage();
-          return this.pending
-        } else {
-          return new FailureView('Missing required value "name"').content;
-        }
-      },
-      () => this.pending,
-      (view: SuccessView) => {
-        if (this.updateData) { this.fetchPackage(); }
-        return view.content;
-      },
-      (error: string) => {
-        if (this.updateData) { this.fetchPackage(); }
-        return new FailureView(error).content;
-      },
-    );
-  }
-
   /** HTML Template for the component. */
   public get template(): TemplateResult {
     return html`
@@ -284,12 +263,50 @@ export class NodePackage extends Seed {
     `;
   }
 
+  public set selectedTab(tab: InstallSource) {
+    if (this.state instanceof Success) {
+      this.state.data.selectedTab = tab;
+    }
+  }
+
+  private pendingHandler(): TemplateResult {
+    return new PendingView().content;
+  }
+
+  private initializedHandler(): TemplateResult {
+    if (this.name) {
+      this.fetchPackage();
+      return this.pendingHandler()
+    } else {
+      return new FailureView('Missing required value "name"').content;
+    }
+  }
+
+  private errorHandler(error: string): TemplateResult {
+    if (this.updateData) { this.fetchPackage(); }
+    return new FailureView(error).content;
+  }
+
+  private successHandler(data: SuccessData): TemplateResult {
+    if (this.updateData) { this.fetchPackage(); }
+    return new SuccessView(this, data.pkg, data.selectedTab).content;
+  }
+
+  private get view(): (state: State) => TemplateResult {
+    return fold<TemplateResult, string, SuccessData>(
+      () => this.initializedHandler(),
+      () => this.pendingHandler(),
+      (error: string) => this.errorHandler(error),
+      (data: SuccessData) => this.successHandler(data),
+    );
+  }
+
   private async fetchPackage(): Promise<void> {
     if (this.name) {
       this.state = new Pending();
       try {
         const pkg = new Pkg(await this.api.fetch(this.name));
-        this.state = new Success(new SuccessView(this, pkg));
+        this.state = new Success({ selectedTab: DEFAULT_INSTALL_SOURCE, pkg });
       } catch (error) {
         this.state = new Failure(error);
       }
@@ -298,7 +315,7 @@ export class NodePackage extends Seed {
   }
 
   private get updateData(): boolean {
-    return this.state instanceof Success && this.state.data.name !== this.name;
+    return this.state instanceof Success && this.state.data.pkg.name !== this.name;
   }
 }
 

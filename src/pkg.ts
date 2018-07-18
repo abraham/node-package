@@ -1,5 +1,7 @@
 export type InstallSource = 'npm' | 'git' | 'unpkg';
 
+export const DEFAULT_INSTALL_SOURCE: InstallSource = 'npm';
+
 export interface InstallCommand {
   command: string;
   id: InstallSource;

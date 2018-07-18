@@ -4,9 +4,7 @@ import { NodePackage } from './node-package';
 import { InstallCommand, InstallSource, Pkg } from './pkg';
 
 export class SuccessView {
-  private selectedInstallCommand: InstallSource = 'npm';
-
-  constructor(private component: NodePackage, private pkg: Pkg) {}
+  constructor(private component: NodePackage, private pkg: Pkg, private selectedInstallCommand: InstallSource) {}
 
   public get name(): string {
     return this.pkg.name;
@@ -28,7 +26,7 @@ export class SuccessView {
 
   private selectInstallCommand(event: MouseEvent, command: InstallCommand): void {
     event.preventDefault();
-    this.selectedInstallCommand = command.id;
+    this.component.selectedTab = command.id;
     this.component.render();
   }
 
