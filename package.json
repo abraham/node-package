@@ -37,7 +37,7 @@
     "watch": "npx nutmeg watch ."
   },
   "dependencies": {
-    "@abraham/remotedata": "0.6.1",
+    "@abraham/remotedata": "0.6.2",
     "@nutmeg/seed": "0.12.2",
     "lit-html": "0.10.2"
   },
