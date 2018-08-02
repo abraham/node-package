@@ -5,6 +5,7 @@
 [![Linux Build Status](https://img.shields.io/travis/abraham/node-package.svg?style=flat&label=linux)](https://travis-ci.org/abraham/node-package)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/abraham/node-package.svg?style=flat&label=windows)](https://ci.appveyor.com/project/abraham/node-package)
 [![Dependency Status](https://david-dm.org/abraham/node-package.svg?style=flat)](https://david-dm.org/abraham/node-package)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/node-package.svg?style=flat&colorB=4bc524)](https://bundlephobia.com/result?p=node-package)
 
 Install
 ----
