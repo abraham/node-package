@@ -1,5 +1,5 @@
 import { html, svg, TemplateResult } from '@nutmeg/seed';
-import { repeat } from 'lit-html/lib/repeat';
+import { repeat } from 'lit-html/directives/repeat';
 import { NodePackage } from './node-package';
 import { InstallCommand, InstallSource, Pkg } from './pkg';
 
@@ -63,8 +63,8 @@ export class SuccessView {
   private installTab(command: InstallCommand): TemplateResult {
     const classes = `item tab ${this.selectedInstallCommand === command.id ? 'selected' : ''}`;
     return html`
-      <a class$="${classes}" href="#" on-click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>
-        <label for$="${command.id}">
+      <a class="${classes}" href="#" @click=${(event: MouseEvent) => this.selectInstallCommand(event, command)}>
+        <label for="${command.id}">
           ${command.id}
         </label>
       </a>
@@ -73,7 +73,7 @@ export class SuccessView {
 
   private installCommand(command: InstallCommand): TemplateResult {
     return html`
-      <input id="${command.id}" class$="command fixed-width ellipsis item ${this.selectedInstallCommand !== command.id ? 'hidden' : ''}" readonly value$="${command.command}">
+      <input id="${command.id}" class="command fixed-width ellipsis item ${this.selectedInstallCommand !== command.id ? 'hidden' : ''}" readonly value="${command.command}">
     `;
   }
 
@@ -86,7 +86,7 @@ export class SuccessView {
         <div id="commands" class="row-horizontal">
           ${repeat(this.pkg.installCommands(this.component.global), command => command.id, (command, _index) => this.installCommand(command))}
           <div class="item">
-            <a id="copy" href="#" title="Copy command" on-click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
+            <a id="copy" href="#" title="Copy command" @click=${(event: MouseEvent) => this.copyInstallCommand(event)}>${this.copy}</a>
           </div>
         </div>
       </div>

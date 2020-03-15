@@ -9,7 +9,7 @@ export class Api {
       const data = await response.json();
       return data;
     } else {
-      throw response.text();
+      throw await response.text();
     }
   }
 

@@ -38,10 +38,10 @@
   },
   "dependencies": {
     "@abraham/remotedata": "0.8.0",
-    "@nutmeg/seed": "0.13.0",
-    "lit-html": "0.10.2"
+    "@nutmeg/seed": "0.17.0",
+    "lit-html": "1.1.2"
   },
   "devDependencies": {
-    "@nutmeg/cli": "0.15.0"
+    "@nutmeg/cli": "0.17.0"
   }
 }

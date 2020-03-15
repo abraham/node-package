@@ -1,10 +1,10 @@
 import { Failure, fold, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
-import { html, Property, Seed, svg, TemplateResult } from '@nutmeg/seed';
+import { html, property, Seed, svg, TemplateResult } from '@nutmeg/seed';
 import { Api } from './api';
-import { Pkg, InstallSource, DEFAULT_INSTALL_SOURCE } from './pkg';
-import { SuccessView } from './success.view';
 import { FailureView } from './failure.view';
 import { PendingView } from './pending.view';
+import { DEFAULT_INSTALL_SOURCE, InstallSource, Pkg } from './pkg';
+import { SuccessView } from './success.view';
 
 interface SuccessData {
   pkg: Pkg,
@@ -14,8 +14,8 @@ interface SuccessData {
 type State = RemoteData<string, SuccessData>;
 
 export class NodePackage extends Seed {
-  @Property() public global: boolean = false;
-  @Property() public name?: string;
+  @property({ type: Boolean }) public global: boolean = false;
+  @property({ type: String }) public name?: string;
 
   private api = new Api();
   private state: State = new Initialized();
